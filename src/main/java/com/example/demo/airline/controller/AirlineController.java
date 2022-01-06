@@ -77,5 +77,9 @@ public class AirlineController {
         }
     }
 
+    @GetMapping("/getFlightById/{uid}")
+    public ResponseEntity<?> getFlightById(@PathVariable Integer uid) {
+        return new ResponseEntity(this.flightService.getFlightById(uid),HttpStatus.OK);
+    }
 
 }

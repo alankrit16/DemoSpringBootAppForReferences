@@ -2,23 +2,17 @@ package com.example.demo.airline.repository;
 
 import com.example.demo.airline.entity.Flights;
 import com.mongodb.MongoWriteException;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.FindOneAndUpdateOptions.*;
-import com.mongodb.client.model.Updates;
-import org.bson.BsonDocument;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import static com.mongodb.client.model.Aggregates.set;
-import static com.mongodb.client.model.Updates.combine;
+import java.util.Map;
 
 @Repository
 public class FlightRepositoryImpl implements FlightRepository{
@@ -66,11 +60,22 @@ public class FlightRepositoryImpl implements FlightRepository{
     public List<Flights> getAllFlights() {
         try {
             this.collection = mongo.getCollection("Flights");
-//            this.collection.updateMany(Filters.eq("source", "Allahabad"),
-//                    combine(Updates.set("source", "Prayagraj")));
             return mongo.findAll(Flights.class);
         }catch (Exception e){
             throw e;
         }
     }
+
+    @Override
+    public Flights getFlightById(Integer uid) {
+        this.collection = mongo.getCollection("Flights");
+        return mongo.getConverter().read(Flights.class,
+                (Document) this.collection.find(Filters.eq("_id",uid)).first());
+    }
 }
+
+//            this.collection.updateMany(Filters.eq("source", "Allahabad"),
+//                    combine(Updates.set("source", "Prayagraj")));
+//            HashMap<String,Object> x = new HashMap<>();
+//            Document d = (Document) this.collection.find(Filters.eq("_id",1)).first();
+//            Flights f = mongo.getConverter().read(Flights.class,d);

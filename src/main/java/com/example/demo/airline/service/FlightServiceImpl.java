@@ -47,4 +47,9 @@ public class FlightServiceImpl implements FlightService{
             throw e;
         }
     }
+
+    @Override
+    public Flights getFlightById(Integer uid) {
+        return this.flightRepository.getFlightById(uid);
+    }
 }

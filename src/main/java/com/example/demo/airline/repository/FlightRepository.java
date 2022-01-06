@@ -9,4 +9,5 @@ public interface FlightRepository {
     void saveFlight(Flights flights);
     void saveManyFlights(List<Flights> flights);
     List<Flights> getAllFlights();
+    Flights getFlightById(Integer uid);
 }

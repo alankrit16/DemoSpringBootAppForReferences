@@ -12,4 +12,6 @@ public interface FlightService {
     void saveManyFlights(List<Flights> flights);
 
     List<Flights> getAllFlights();
+
+    Flights getFlightById(Integer uid);
 }
